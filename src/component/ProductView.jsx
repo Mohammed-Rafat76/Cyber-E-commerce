@@ -2,28 +2,56 @@ import { useState } from "react";
 import ProductCard from "./ProductCard";
 import { useEffect } from "react";
 import axios from "axios";
-
+import { domain, selectCats } from "../store/index";
 export default function ProductView() {
   const [product, setProduct] = useState([]);
+  const { value } = selectCats();
+  const [view, setView] = useState([]);
   useEffect(() => {
-    let domain = "http://localhost:1337";
     let endPoint = "/api/products?populate=*";
     let url = domain + endPoint;
     axios
       .get(url)
       .then((res) => {
-       
-        setProduct(res.data.data)
+        setProduct(res.data.data);
+        setView(res.data.data);
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
       });
-  });
+  }, []);
+  useEffect(() => {
+    if (value) {
+      let endPoint = `/api/categories/${value.documentId}`;
+      let url = domain + endPoint;
+      axios
+        .get(url, {
+          params: {
+            populate: {
+              products: {
+                populate: "*",
+              },
+            },
+          },
+        })
+        .then((res) => {
+          // setProduct(res.data.data)
+          setView(res.data.data.products);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      setView(product);
+    }
+  }, [value]);
   return (
     <div className=" grow grid grid-cols-2 lg:grid-cols-3 gap-4">
-      {product.map((el) => (
-        <ProductCard key={el.id} product={el} />
-      ))}
+      {view.length ? (
+        view.map((el) => <ProductCard key={el.id} product={el} />)
+      ) : (
+        <h1>There is no product here yet</h1>
+      )}
     </div>
   );
 }

@@ -1,17 +1,21 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
+import { domain, selectCats } from "../store";
 
 export default function CategoryFillters() {
-  const [filters] = useState([
-    { ischecked: true, name: "smartphones" },
-    { ischecked: true, name: "laptops" },
-    { ischecked: false, name: "sunglasses" },
-    { ischecked: false, name: "motorcycle" },
-    { ischecked: false, name: "lighting" },
-    { ischecked: false, name: "furniture" },
-    { ischecked: false, name: "men shirts" },
-    { ischecked: false, name: "women bags" },
-  ]);
+  const [filters, setFelters] = useState([]);
+  const {selectedCategory} = selectCats()
+  useEffect(() => {
+    axios
+      .get(domain + '/api/categories')
+      .then((res) => {
+        setFelters(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err)
+      });
+  }, []);
   return (
     <div>
       <div className="join join-vertical">
@@ -31,8 +35,9 @@ export default function CategoryFillters() {
               <div className="w-full flex gap-3" key={index}>
                 <label className="flex gap-3">
                   <input
-                    type="checkbox"
-                    defaultChecked={el.ischecked}
+                    type="radio"
+                    name="cats"
+                    onClick={()=>selectedCategory(el)}
                     className="checkbox checkbox-neutral"
                     id={"ch" + index}
                   />
@@ -40,7 +45,7 @@ export default function CategoryFillters() {
                 </label>
               </div>
             ))}
-      <button className="btn btn-neutral w-full">Apply</button>
+            <button onClick={()=>selectedCategory(null)} className="btn btn-neutral w-full">Reset Products</button>
           </div>
         </div>
       </div>
