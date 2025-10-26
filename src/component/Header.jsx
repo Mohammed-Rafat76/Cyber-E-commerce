@@ -3,8 +3,8 @@ import logo from "../assets/Logo.png";
 import { CiHeart } from "react-icons/ci";
 import { IoCartOutline } from "react-icons/io5";
 import { CiUser } from "react-icons/ci";
-import { IoMdMenu } from "react-icons/io";
 import { userCart } from "../store";
+import OpenMenuModal from "./OpenMenuModal";
 export default function Header() {
   const { value: userProduct } = userCart();
   return (
@@ -39,7 +39,7 @@ export default function Header() {
           </Link>
           <CiUser className="text-[32px] " />
         </div>
-        <IoMdMenu className="block md:hidden text-[40px] " />
+        <OpenMenuModal/>
       </div>
     </header>
   );

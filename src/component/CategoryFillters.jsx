@@ -17,9 +17,9 @@ export default function CategoryFillters() {
       });
   }, []);
   return (
-    <div>
-      <div className="join join-vertical">
-        <div className="collapse collapse-arrow join-item w-[256px] bg-white ">
+    <div className="w-full md:w-[500px] lg:w-[254px] p-5">
+      <div className="join w-full join-vertical">
+        <div className="collapse collapse-arrow join-item w-full bg-white ">
           <input type="checkbox" name="my-accordion-4" />
           <div className="collapse-title font-medium text-[18px] border-b-[0.5px] border-[#B5B5B5]">
             Categories
