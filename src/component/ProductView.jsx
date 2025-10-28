@@ -16,6 +16,7 @@ export default function ProductView() {
       .then((res) => {
         setProduct(res.data.data);
         setView(res.data.data);
+        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -48,17 +49,19 @@ export default function ProductView() {
   }, [value]);
   return (
     <div className="w-full">
-      <h1 className="text-[#6C6C6C] mb-[24px]">Available Products: {view.length}</h1>
+      <h1 className="text-[#6C6C6C] mb-[24px]">
+        Available Products: {view.length}
+      </h1>
       <div className=" grow grid grid-cols-2 lg:grid-cols-3 gap-4 ">
-      {view.length ? (
-        view.map((el) => <ProductCard key={el.id} product={el} />)
-      ) : (
-        <h1>There is no product here yet</h1>
-      )}
-    </div>
-    <div className="w-full flex justify-center">
-     <Pagination/>
-    </div>
+        {view.length ? (
+          view.map((el) => <ProductCard key={el.documentId} product={el} />)
+        ) : (
+          <h1>There is no product here yet</h1>
+        )}
+      </div>
+      <div className="w-full flex justify-center">
+        <Pagination />
+      </div>
     </div>
   );
 }

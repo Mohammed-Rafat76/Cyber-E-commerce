@@ -15,7 +15,7 @@ export default function Hello() {
           <Route path="/" element={<MainlayOut />}>
             <Route index element={<ProductPage />} />
             <Route path="product/:documentId" element={<ProductDetailes/>} />
-            <Route path="cart" element={<h1><CartPage/></h1>} />
+            <Route path="cart" element={<CartPage/>} />
             <Route path="About" element={<h1>About</h1>} />
             <Route path="Contact-Us" element={<h1>Contact Us</h1>} />
             <Route path="Blog" element={<h1>Blog</h1>} />
